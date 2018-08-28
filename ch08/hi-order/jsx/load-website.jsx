@@ -5,7 +5,7 @@ const LoadWebsite = (Component) => {
       this.state = {label: 'Run', handleClick: this.handleClick.bind(this)} 
     }
     getUrl() {
-      return 'https://facebook.github.io/react/docs/top-level-api.html'
+      return 'http://localhost:8080/children/index.html'
     }
     handleClick(event) {
       document.getElementById('frame').src = this.getUrl()
