@@ -1,13 +1,19 @@
 class Menu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      menus: ['Menu']
+    }
+  }
+  componentDidMount() {
+    fetch(this.props['data-url'])
+      .then(response=> response.json())
+      .then(menus=>{this.setState({menus: menus.indexPage})})
+  }
   render() {
-    let menus = ['Home',
-      'About',
-      'Services',
-      'Portfolio',
-      'Contact us']
     return (
       <div>
-        {menus.map((v,i) => {
+        {this.state.menus.map((v,i) => {
           return <div key={i}><Link label={v}/></div>
         })}
       </div>
@@ -31,4 +37,4 @@ class Link extends React.Component {
   }
 }
 
-ReactDOM.render(<Menu />, document.getElementById('menu'))
+ReactDOM.render(<Menu data-url='menus.json'/>, document.getElementById('menu'))
