@@ -1,7 +1,4 @@
 const Timer = (props) => {
-  if (props.timeLeft == 0) {
-    document.getElementById('end-of-time').play()
-  }
   if (props.timeLeft == null || props.timeLeft == 0)
     return <div/>
   return <h1>Time left: {props.timeLeft}</h1>
@@ -37,6 +34,23 @@ class Button extends React.Component {
       onClick={handleClick}>
       {text}
     </button>
+  }
+}
+
+class Audio extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleTimeUp = this.handleTimeUp.bind(this)
+  }
+  handleTimeUp() {
+    let audioNode = ReactDOM.findDOMNode(this)
+    audioNode.play()
+  }
+  componentDidUpdate() {
+    if (this.props.timeLeft == 0) this.handleTimeUp()
+  }
+  render() {
+    return <audio src={this.props.src} preload="auto"></audio>
   }
 }
 
@@ -96,7 +110,7 @@ class TimerWrapper extends React.Component {
           <Button func="reset" cancel={this.reset}/>
         </div>
         <Timer timeLeft={this.state.timeLeft}/>
-      <audio id="end-of-time" src="flute_c_long_01.wav" preload="auto"></audio>
+      <Audio src="flute_c_long_01.wav" timeLeft={this.state.timeLeft}/>
       </div>
     )
   }
