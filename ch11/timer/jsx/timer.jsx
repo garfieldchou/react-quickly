@@ -61,6 +61,9 @@ class TimerWrapper extends React.Component {
 }
 
 ReactDOM.render(
-  <TimerWrapper/>,
+  <div>
+    <SliderButtons/>
+    <TimerWrapper/>
+  </div>,
   document.getElementById('timer-app')
 )
