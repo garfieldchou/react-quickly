@@ -19,6 +19,10 @@ class Button extends React.Component {
         text = 'Pause/Resume'
         handleClick = this.props.pauseResume
         break
+      case 'cancel':
+        text = 'Cancel'
+        handleClick =  this.props.cancel
+        break
       default:
         text = `${this.props.time} seconds`
         handleClick = ()=>{this.props.startTimer(this.props.time)}
@@ -38,6 +42,7 @@ class TimerWrapper extends React.Component {
     this.state =  {timeLeft: null, timer: null, pause: false}
     this.startTimer = this.startTimer.bind(this)
     this.pauseResume = this.pauseResume.bind(this)
+    this.cancel = this.cancel.bind(this)
   }
   startTimer(timeLeft) {
     clearInterval(this.state.timer)
@@ -59,6 +64,10 @@ class TimerWrapper extends React.Component {
     }
     this.setState({pause: !this.state.pause})
   }
+  cancel() {
+    clearInterval(this.state.timer)
+    this.setState({timeLeft: null, timer: null, pause: false})
+  }
   render() {
     return (
       <div className="row-fluid">
@@ -68,6 +77,7 @@ class TimerWrapper extends React.Component {
           <Button time="10" startTimer={this.startTimer}/>
           <Button time="15" startTimer={this.startTimer}/>
           <Button func="pauseResume" pauseResume={this.pauseResume}/>
+          <Button func="cancel" cancel={this.cancel}/>
         </div>
         <Timer timeLeft={this.state.timeLeft}/>
       <audio id="end-of-time" src="flute_c_long_01.wav" preload="auto"></audio>
