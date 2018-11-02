@@ -8,6 +8,8 @@ const { hashHistory,
   IndexLink
 } = require('react-router')
 
+const Index = require('./index.jsx')
+const Layout = require('./layout.jsx')
 const Modal = require('./modal.jsx')
 const Cart = require('./cart.jsx')
 const Checkout = require('./checkout.jsx')
@@ -21,65 +23,6 @@ const PRODUCTS = [
   { id: 4, src: 'images/fullstack-cover.png', title: 'Full Stack JavaScript', url: 'http://www.apress.com/9781484217504'}
 ]
 
-const Heading = () => {
-  return <h1>Nile Book Store</h1>
-}
-
-const Copy = () => {
-  return <p>Please click on a book to view details in a modal. You can copy/paste the link of the modal. The link will open the book on a separate page.</p>
-}
-
-
-class App extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    this.isModal = (nextProps.location.state &&
-      nextProps.location.state.modal)
-    if (this.isModal &&
-      nextProps.location.key !== this.props.location.key) {
-      this.previousChildren = this.props.children
-    }
-  }
-  render() {
-    console.log('Modal: ', this.isModal)
-    return (
-      <div className="well">
-        <Heading/>
-        <div>
-          {(this.isModal)?this.previousChildren:this.props.children}
-          {/* {this.props.children} */}
-          {(this.isModal)?
-            <Modal isOpen={true} returnTo={this.props.location.state.returnTo}>
-              {this.props.children}
-            </Modal> : ''
-          }
-        </div>
-      </div>
-    )
-  }
-}
-
-class Index extends React.Component {
-  render() {
-    return (
-      <div>
-        <Copy/>
-        <p><Link to="/cart" className="btn btn-danger">Cart</Link></p>
-        <div>
-          {PRODUCTS.map(picture => (
-            <Link key={picture.id}
-              to={{pathname: `/products/${picture.id}`,
-                state: { modal: true,
-                  returnTo: this.props.location.pathname }
-                }
-              }>
-              <img style={{ margin: 10 }} src={picture.src} height="100" />
-            </Link>
-          ))}
-        </div>
-      </div>
-    )
-  }
-}
 let cartItems = {}
 const addToCart = (id) => {
   if (cartItems[id])
@@ -90,7 +33,7 @@ const addToCart = (id) => {
 
 ReactDOM.render((
   <Router history={hashHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={Layout}>
       <IndexRoute component={Index}/>
       <Route path="/products/:id" component={Product}
         addToCart={addToCart}

@@ -18,8 +18,7 @@ class Product extends React.Component {
         <p>{this.props.route.products[this.props.params.id].title}</p>
         <Link
           to={{
-            pathname: `/cart`,
-            state: { productId: this.props.params.id}
+            pathname: `/cart`
           }}
           onClick={this.handleBuy}
           className="btn btn-primary">
